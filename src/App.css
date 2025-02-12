@@ -1,0 +1,84 @@
+.wrapper {
+	background-color: #fff;
+}
+
+.container {
+	max-width: 1920px;
+	margin: 0 auto;
+	padding: 20px 20px;
+	/* background-color: ; */
+}
+
+/* .container div {
+	gap: 20px;
+	background-color: #fff !important;
+} */
+
+.content {
+	border-radius: 10px;
+	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
+	overflow: hidden;
+}
+
+.resourses {
+	background-color: blueviolet;
+}
+.bonds-list {
+	background-color: rgb(153, 226, 43);
+}
+
+.title {
+	padding: 25px 20px;
+	font-size: 24px;
+	font-weight: 700;
+	border-bottom: 2px solid #d0d0d094;
+}
+
+.form {
+	padding: 25px 20px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 15px;
+}
+
+.form input {
+	cursor: pointer;
+}
+
+.form > div {
+	margin-bottom: 0;
+}
+
+.form-buttons {
+	padding: 25px 20px;
+	display: flex;
+	gap: 20px;
+}
+
+.btn-outline button:not(:disabled) {
+	position: relative;
+	background-color: rgb(74, 87, 231) !important;
+	color: #fff !important;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-form-item
+	.ant-form-item-label
+	> label.ant-form-item-required:not(
+		.ant-form-item-required-mark-optional
+	)::before {
+	display: inline-block;
+	margin-inline-end: 4px;
+	color: #ff4d4f;
+	font-size: 14px;
+	font-family: SimSun, sans-serif;
+	line-height: 1;
+	content: '';
+}
+
+.flex {
+	align-self: end;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-picker {
+	display: flex;
+}
