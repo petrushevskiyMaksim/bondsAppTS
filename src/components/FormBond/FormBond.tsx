@@ -1,8 +1,8 @@
 import React from 'react';
 import type { FormInstance } from 'antd';
 import { Button, Form, Input, DatePicker } from 'antd';
-
 import type { DatePickerProps } from 'antd';
+import './form.css';
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
 	console.log(date, dateString);
@@ -108,10 +108,14 @@ const FormBond: React.FC = () => {
 
 			<div className='form-buttons'>
 				<div className='btn-outline'>
-					<SubmitButton form={form}>Добавить облигацию</SubmitButton>
+					<SubmitButton type='primary' form={form}>
+						Добавить облигацию
+					</SubmitButton>
 				</div>
 				<div className='btn-outline'>
-					<Button htmlType='reset'>Очистить форму</Button>
+					<Button type='primary' htmlType='reset'>
+						Очистить форму
+					</Button>
 				</div>
 			</div>
 		</Form>

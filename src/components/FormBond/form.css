@@ -1,0 +1,93 @@
+.form-wrap {
+	border-radius: 10px;
+	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.form {
+	padding: 25px 20px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 15px;
+}
+
+.form input {
+	cursor: pointer;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-form-item
+	.ant-form-item-label
+	> label.ant-form-item-required:not(
+		.ant-form-item-required-mark-optional
+	)::before {
+	display: inline-block;
+	margin-inline-end: 4px;
+	color: #ff4d4f;
+	font-size: 14px;
+	font-family: SimSun, sans-serif;
+	line-height: 1;
+	content: '';
+}
+
+.form label {
+	font-weight: 700;
+	opacity: 0.6;
+}
+
+.form > div {
+	margin-bottom: 0;
+}
+
+.form-buttons {
+	padding: 25px 20px;
+	display: flex;
+	gap: 20px;
+}
+
+.btn-outline {
+	position: relative;
+}
+
+.btn-outline > button:hover:not(:disabled)::after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 102.5%;
+	height: 110%;
+	border-radius: 6px;
+	outline: 2px solid #1677ffc7;
+}
+
+.flex {
+	align-self: end;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-picker {
+	display: flex;
+}
+
+@media (max-width: 1230px) {
+	.form {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 1024px) {
+	.form {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.form-buttons {
+		flex-wrap: wrap;
+	}
+	.btn-outline {
+		width: 100%;
+	}
+	.btn-outline button[type='submit'] {
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	
+}

@@ -1,84 +1,43 @@
-.wrapper {
-	background-color: #fff;
+.heading:not(:last-child) {
+	margin-bottom: 30px;
 }
 
-.container {
-	max-width: 1920px;
-	margin: 0 auto;
-	padding: 20px 20px;
-	/* background-color: ; */
-}
-
-/* .container div {
-	gap: 20px;
-	background-color: #fff !important;
-} */
-
-.content {
-	border-radius: 10px;
-	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
-	overflow: hidden;
+main {
+	margin-right: 30px;
 }
 
 .resourses {
-	background-color: blueviolet;
+	width: 350px !important;
+	flex: 0 0 350px !important;
+	min-width: 350px !important;
+	max-width: 350px !important;
+	border-radius: 10px;
+	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
+	overflow: hidden;
+	background-color: #fff;
 }
+
 .bonds-list {
 	background-color: rgb(153, 226, 43);
 }
 
-.title {
-	padding: 25px 20px;
-	font-size: 24px;
-	font-weight: 700;
-	border-bottom: 2px solid #d0d0d094;
-}
+@media (max-width: 700px) {
+	main {
+		margin-right: 0px;
+		margin-bottom: 20px;
+	}
+	.ant-layout.ant-layout-has-sider {
+		flex-direction: column;
+	}
 
-.form {
-	padding: 25px 20px;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 15px;
-}
+	.ant-layout.ant-layout-has-sider > .ant-layout-content {
+		width: 100%;
+	}
 
-.form input {
-	cursor: pointer;
-}
-
-.form > div {
-	margin-bottom: 0;
-}
-
-.form-buttons {
-	padding: 25px 20px;
-	display: flex;
-	gap: 20px;
-}
-
-.btn-outline button:not(:disabled) {
-	position: relative;
-	background-color: rgb(74, 87, 231) !important;
-	color: #fff !important;
-}
-
-:where(.css-dev-only-do-not-override-1yacf91).ant-form-item
-	.ant-form-item-label
-	> label.ant-form-item-required:not(
-		.ant-form-item-required-mark-optional
-	)::before {
-	display: inline-block;
-	margin-inline-end: 4px;
-	color: #ff4d4f;
-	font-size: 14px;
-	font-family: SimSun, sans-serif;
-	line-height: 1;
-	content: '';
-}
-
-.flex {
-	align-self: end;
-}
-
-:where(.css-dev-only-do-not-override-1yacf91).ant-picker {
-	display: flex;
+	.resourses {
+		width: 100% !important;
+		flex: 0 0 auto !important;
+		min-width: 100% !important;
+		max-width: 100% !important;
+	}
 }
