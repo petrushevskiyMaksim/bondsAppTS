@@ -4,8 +4,9 @@ import { Flex, Layout, Button } from 'antd';
 import { Title } from './components/Title';
 import { FormBond } from './components/FormBond';
 import { ListResourses } from './components/ListResourses';
+import { _Table } from './components/Table';
 
-const { Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const App: React.FC = () => (
 	<div className='wrapper'>
@@ -24,7 +25,7 @@ const App: React.FC = () => (
 						</div>
 					</Sider>
 				</Layout>
-				<Footer className='bonds-list'>Bonds List</Footer>
+				<_Table></_Table>
 			</Layout>
 		</Flex>
 	</div>

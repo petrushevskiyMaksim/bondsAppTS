@@ -1,4 +1,30 @@
 @import './reset.css';
+
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar:horizontal {
+	border-radius: 6px;
+	background-color: #ccc;
+}
+/* сам бар */
+::-webkit-scrollbar-track {
+	border-radius: 6px;
+	background-color: #ccc;
+}
+/* ползунок */
+::-webkit-scrollbar-thumb {
+	border-radius: 6px;
+	background-color: #ffffffc7;
+}
+
+::-webkit-scrollbar-corner {
+	background: #ccc;
+}
+
 footer {
 	display: none;
 }

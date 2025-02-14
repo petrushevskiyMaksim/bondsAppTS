@@ -4,6 +4,7 @@
 }
 
 .ant-spin-container {
+	border-radius: 6px;
 	height: 300px;
 	overflow: auto;
 }
