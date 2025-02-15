@@ -1,8 +1,53 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Table } from 'antd';
 import type { TableProps } from 'antd';
+import { useDataForm } from '../store/DataFormContext';
 
-interface DataType {
+// const data: DataType[] = [
+// 	{
+// 		order: 1,
+// 		key: '1',
+// 		name: 'John Brown',
+// 		sumBonds: 32,
+// 		nominalPrice: 1000,
+// 		buyPrice: 950,
+// 		brokerTax: 0.3,
+// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		couponDate: '02.22.2025',
+// 		couponPeriod: 2,
+// 		NKD: 22,
+// 	},
+
+// 	{
+// 		order: 2,
+// 		key: '2',
+// 		name: 'Jim Green',
+// 		sumBonds: 42,
+// 		nominalPrice: 1000,
+// 		buyPrice: 700,
+// 		brokerTax: 0.3,
+// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		couponDate: '02.22.2025',
+// 		couponPeriod: 2,
+// 		NKD: 22,
+// 	},
+
+// 	{
+// 		order: 3,
+// 		key: '3',
+// 		name: 'Joe Black',
+// 		sumBonds: 32,
+// 		nominalPrice: 1000,
+// 		buyPrice: 880,
+// 		brokerTax: 0.3,
+// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		couponDate: '02.22.2025',
+// 		couponPeriod: 2,
+// 		NKD: 22,
+// 	},
+// ];
+
+export interface DataType {
 	order: number;
 	key: string;
 	name: string;
@@ -69,55 +114,10 @@ const columns: TableProps<DataType>['columns'] = [
 	},
 ];
 
-const data: DataType[] = [
-	{
-		order: 1,
-		key: '1',
-		name: 'John Brown',
-		sumBonds: 32,
-		nominalPrice: 1000,
-		buyPrice: 950,
-		brokerTax: 0.3,
-		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
-		couponDate: '02.22.2025',
-		couponPeriod: 2,
-		NKD: 22,
-		
-	},
+const _Table: React.FC = () => {
+	const { dataForm } = useDataForm();
 
-	{
-		order: 2,
-		key: '2',
-		name: 'Jim Green',
-		sumBonds: 42,
-		nominalPrice: 1000,
-		buyPrice: 700,
-		brokerTax: 0.3,
-		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
-		couponDate: '02.22.2025',
-		couponPeriod: 2,
-		NKD: 22,
-		
-	},
-
-	{
-		order: 3,
-		key: '3',
-		name: 'Joe Black',
-		sumBonds: 32,
-		nominalPrice: 1000,
-		buyPrice: 880,
-		brokerTax: 0.3,
-		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
-		couponDate: '02.22.2025',
-		couponPeriod: 2,
-		NKD: 22,
-		
-	},
-];
-
-const _Table: React.FC = () => (
-	<Table<DataType> columns={columns} dataSource={data} />
-);
+	return <Table<DataType> columns={columns} dataSource={dataForm} sticky />;
+};
 
 export default _Table;

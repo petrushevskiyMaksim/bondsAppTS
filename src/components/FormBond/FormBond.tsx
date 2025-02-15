@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { useState } from 'react';
 import type { FormInstance } from 'antd';
 import { Button, Form, Input, DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
+import { useDataForm } from '../store/DataFormContext';
+import { DataType } from '../Table/Table';
 import './form.css';
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -40,8 +43,26 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
 const FormBond: React.FC = () => {
 	const [form] = Form.useForm();
 
+	const { dataForm, setDataForm } = useDataForm();
+
+	const onFinish = (values: DataType) => {
+		const newData = {
+			...values,
+			key: Date.now(), // Уникальный ключ для таблицы
+			order: dataForm.length + 1, // Порядковый номер
+		};
+		setDataForm(prevData => [...prevData, newData]);
+		form.resetFields(); // Очистка формы после отправки
+	};
+
 	return (
-		<Form form={form} name='validateOnly' layout='vertical' autoComplete='off'>
+		<Form
+			form={form}
+			onFinish={onFinish}
+			name='validateOnly'
+			layout='vertical'
+			autoComplete='on'
+		>
 			<div className='form'>
 				<Form.Item
 					name='bondName'
@@ -79,7 +100,12 @@ const FormBond: React.FC = () => {
 					<Input type='number' placeholder='Например: 0.3' />
 				</Form.Item>
 
-				<Form.Item className='flex' label='Дата покупки / Дата продажи'>
+				<Form.Item
+					name='buyAndSell'
+					className='flex'
+					label='Дата покупки / Дата продажи'
+					rules={[{ required: true }]}
+				>
 					<RangePicker />
 				</Form.Item>
 
