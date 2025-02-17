@@ -24,24 +24,13 @@
 	background: #ccc;
 }
 
-footer {
-	display: none;
-}
 body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-.container {
-	max-width: 1920px;
-	margin: 0 auto;
-	padding: 20px 20px;
-}
 
-.container div {
-	background-color: inherit;
-}
 
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

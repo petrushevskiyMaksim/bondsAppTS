@@ -3,3 +3,29 @@
 	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
 	background-color: #fff;
 }
+/* 
+*/
+/* .table-wrap {
+	max-width: 100%;
+	overflow: auto;
+}
+
+.ant-table-body {
+	overflow: auto;
+	width: 100%;
+}
+
+table {
+	overflow: auto;
+	width: 100%;
+} */
+
+/* table {
+	table-layout: auto !important;
+} */
+/*
+.ant-table-container {
+	display: flex !important;
+	flex-direction: column !important;
+	overflow: auto !important;
+} */

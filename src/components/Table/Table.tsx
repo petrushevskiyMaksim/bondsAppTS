@@ -12,7 +12,7 @@ import { useDataForm } from '../store/DataFormContext';
 // 		nominalPrice: 1000,
 // 		buyPrice: 950,
 // 		brokerTax: 0.3,
-// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		buyAndSell: '01.02.2024 - 02.02.2025',
 // 		couponDate: '02.22.2025',
 // 		couponPeriod: 2,
 // 		NKD: 22,
@@ -26,7 +26,7 @@ import { useDataForm } from '../store/DataFormContext';
 // 		nominalPrice: 1000,
 // 		buyPrice: 700,
 // 		brokerTax: 0.3,
-// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		buyAndSell: '01.02.2024 - 02.02.2025',
 // 		couponDate: '02.22.2025',
 // 		couponPeriod: 2,
 // 		NKD: 22,
@@ -40,7 +40,7 @@ import { useDataForm } from '../store/DataFormContext';
 // 		nominalPrice: 1000,
 // 		buyPrice: 880,
 // 		brokerTax: 0.3,
-// 		dateBuyAndSell: ['01.02.2024', '02.02.2025'],
+// 		buyAndSell: '01.02.2024 - 02.02.2025',
 // 		couponDate: '02.22.2025',
 // 		couponPeriod: 2,
 // 		NKD: 22,
@@ -55,7 +55,7 @@ export interface DataType {
 	nominalPrice: number;
 	buyPrice: number;
 	brokerTax: number;
-	dateBuyAndSell: string[];
+	buyAndSell: string;
 	couponDate: string;
 	couponPeriod: number;
 	NKD: number;
@@ -64,38 +64,45 @@ export interface DataType {
 const columns: TableProps<DataType>['columns'] = [
 	{
 		title: '№',
+		width: 50,
 		dataIndex: 'order',
 		key: 'order',
 	},
 	{
 		title: 'Название',
+		width: 120,
 		dataIndex: 'name',
 		key: 'name',
+		fixed: 'left',
 	},
 	{
 		title: 'Количество',
+		width: 120,
 		dataIndex: 'sumBonds',
 		key: 'sumBonds',
 	},
 	{
 		title: 'Номинал',
+		width: 100,
 		dataIndex: 'nominalPrice',
 		key: 'nominalPrice',
 	},
 	{
 		title: 'Цена покупки',
+		width: 100,
 		dataIndex: 'buyPrice',
 		key: 'buyPrice',
 	},
 	{
 		title: 'Комиссия брокера',
+		width: 100,
 		dataIndex: 'brokerTax',
 		key: 'brokerTax',
 	},
 	{
 		title: 'Дата покупки / продажи',
-		dataIndex: 'dateBuyAndSell',
-		key: 'dateBuyAndSell',
+		dataIndex: 'buyAndSell',
+		key: 'buyAndSell',
 	},
 	{
 		title: 'Дата купона',
@@ -104,20 +111,31 @@ const columns: TableProps<DataType>['columns'] = [
 	},
 	{
 		title: 'Кол-во купонов в год',
+		width: 130,
 		dataIndex: 'couponPeriod',
 		key: 'couponPeriod',
 	},
 	{
 		title: 'НКД',
+		width: 100,
 		dataIndex: 'NKD',
 		key: 'NKD',
 	},
 ];
 
-const _Table: React.FC = () => {
+const _Table: React.FC = ({ className }) => {
 	const { dataForm } = useDataForm();
 
-	return <Table<DataType> columns={columns} dataSource={dataForm} sticky />;
+	return (
+		<Table<DataType>
+			className={className}
+			columns={columns}
+			dataSource={dataForm}
+			sticky
+			scroll={{ x: 'max-content' }} // Включаем прокрутку
+			pagination={{ pageSize: 10 }}
+		/>
+	);
 };
 
 export default _Table;

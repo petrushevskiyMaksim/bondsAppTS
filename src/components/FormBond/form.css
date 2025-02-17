@@ -5,10 +5,17 @@
 }
 
 .form {
-	padding: 25px 20px;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 15px;
+}
+
+.form > div {
+	margin-bottom: 0;
+}
+
+.form:not(:last-child) {
+	margin-bottom: 30px;
 }
 
 .form input {
@@ -34,59 +41,58 @@
 	opacity: 0.6;
 }
 
-.form > div {
-	margin-bottom: 0;
-}
-
 .form-buttons {
-	padding: 25px 20px;
 	display: flex;
 	gap: 20px;
-}
-
-.btn-outline {
-	position: relative;
-}
-
-.btn-outline > button:hover:not(:disabled)::after {
-	content: '';
-	position: absolute;
-	display: block;
-	width: 102.5%;
-	height: 110%;
-	border-radius: 6px;
-	outline: 2px solid #1677ffc7;
-}
-
-.flex {
-	align-self: end;
 }
 
 :where(.css-dev-only-do-not-override-1yacf91).ant-picker {
 	display: flex;
 }
 
+/* .flex {
+	align-self: end;
+} */
+
 @media (max-width: 1230px) {
+	.form {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	:where(.css-dev-only-do-not-override-1yacf91).ant-form-item
+		.ant-form-item-label
+		> label {
+		height: 32px !important;
+	}
+}
+
+@media (max-width: 850px) {
+	.form {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.form-wrap {
+		margin: 0 -10px;
+		flex: 0 1 50% !important;
+	}
+}
+
+@media (max-width: 750px) {
+	.form-wrap {
+		flex: 1 1 100% !important;
+	}
 	.form {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 425px) {
 	.form {
 		grid-template-columns: repeat(1, 1fr);
 	}
 	.form-buttons {
 		flex-wrap: wrap;
 	}
-	.btn-outline {
-		width: 100%;
-	}
-	.btn-outline button[type='submit'] {
-		width: 100%;
-	}
-}
-
-@media (max-width: 768px) {
-	
 }

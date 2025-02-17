@@ -1,22 +1,26 @@
-.list-resourses {
-	flex-grow: 1;
-	padding: 20px;
+.resourses-wrap {
+	max-width: 300px;
+	max-height: 430px;
+	border-radius: 10px;
+	box-shadow: 0px 1px 1px 1px #c6c6c6d3;
+	background-color: #fff;
 }
 
-.ant-spin-container {
-	border-radius: 6px;
-	height: 300px;
+.resourses-list-wrap {
+	flex: 1 1 auto;
+}
+
+.list-resourses {
+	max-height: 250px;
 	overflow: auto;
+}
+
+.btn-resourses {
+	margin-top: auto;
 }
 
 :where(.css-dev-only-do-not-override-1yacf91).ant-list-split .ant-list-item {
 	border-block-end: none;
-}
-
-:where(.css-dev-only-do-not-override-1yacf91).ant-list .ant-list-item-no-flex {
-	display: flex;
-	column-gap: 10px;
-	justify-content: start;
 }
 
 .icon-resourses {
@@ -24,13 +28,41 @@
 	font-weight: 700;
 }
 
-.btn-resourses {
-	padding: 20px;
+@media (max-width: 768px) {
+	.resourses-wrap {
+		margin: 0 -10px;
+		flex: 0 1 50% !important;
+		max-width: fit-content !important;
+	}
 }
 
-.btn-resourses button {
-	width: 100%;
+@media (max-width: 750px) {
+	.resourses-wrap {
+		flex: 1 1 100% !important;
+	}
+	.list-resourses {
+		
+		margin-bottom: 20px;
+	}
 }
+
+/* 
+
+.ant-spin-container {
+	border-radius: 6px;
+	height: 300px;
+	overflow: auto;
+}
+
+
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-list .ant-list-item-no-flex {
+	display: flex;
+	column-gap: 10px;
+	justify-content: start;
+}
+
+
 
 .ant-layout-sider-children {
 	display: flex;
@@ -42,4 +74,4 @@
 		height: 150px;
 		overflow: auto;
 	}
-}
+} */

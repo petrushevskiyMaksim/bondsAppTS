@@ -5,22 +5,62 @@ import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
 import './ListResourses.css';
 
 const data = [
-	'Racing car sprays burning fuel into crowd.',
-	'Japanese princess to wed commoner.',
-	'Australian walks 100km after outback crash.',
-	'Man charged over missing wedding girl.',
-	'Los Angeles battles huge wildfires.',
-	'Racing car sprays burning fuel into crowd.',
-	'Japanese princess to wed commoner.',
-	'Australian walks 100km after outback crash.',
-	'Man charged over missing wedding girl.',
-	'Los Angeles battles huge wildfires.',
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 1,
+		text: 'Московская биржа - Облигации',
+		link: 'https://www.moex.com/s3079',
+	},
+	{
+		id: 2,
+		text: 'Rusbonds - Информационное агенство Rusbonds - Информационное агенствоRusbonds - Информационное агенствоRusbonds - Информационное агенствоRusbonds - Информационное агенство',
+		link: 'https://rusbonds.ru/',
+	},
+	// {
+	// 	id: 3,
+	// 	text: 'Финам - Облигации',
+	// 	link: 'https://bonds.finam.ru/',
+	// },
+	// {
+	// 	id: 4,
+	// 	text: 'SmartLab - Облигации',
+	// 	link: 'https://www.moex.com/s3079',
+	// },
+	// {
+	// 	id: 5,
+	// 	text: 'Investing.com - Облигации РФ',
+	// 	link: 'https://www.investing.com/',
+	// },
 ];
 
-const ListResourses: React.FC = () => (
+const ListResourses: React.FC = ({ className }) => (
 	<>
 		<List
-			className='list-resourses'
+			className={className}
 			dataSource={data}
 			renderItem={item => (
 				<List.Item className='list-item'>
@@ -29,7 +69,9 @@ const ListResourses: React.FC = () => (
 						size={15}
 						strokeWidth={1}
 					/>{' '}
-					<a href='#'>{item}</a>
+					<a target='_blank' href={item.link} rel='noopener noreferrer'>
+						{item.text}
+					</a>
 				</List.Item>
 			)}
 		/>

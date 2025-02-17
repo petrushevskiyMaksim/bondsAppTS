@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useState } from 'react';
 import type { FormInstance } from 'antd';
 import { Button, Form, Input, DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
@@ -40,7 +39,7 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
 	);
 };
 
-const FormBond: React.FC = () => {
+const FormBond: React.FC = ({ className }) => {
 	const [form] = Form.useForm();
 
 	const { dataForm, setDataForm } = useDataForm();
@@ -48,6 +47,8 @@ const FormBond: React.FC = () => {
 	const onFinish = (values: DataType) => {
 		const newData = {
 			...values,
+			buyAndSell: values.buyAndSell.toString(),
+			couponDate: values.couponDate.toString(),
 			key: Date.now(), // Уникальный ключ для таблицы
 			order: dataForm.length + 1, // Порядковый номер
 		};
@@ -57,6 +58,7 @@ const FormBond: React.FC = () => {
 
 	return (
 		<Form
+			className={className}
 			form={form}
 			onFinish={onFinish}
 			name='validateOnly'
@@ -65,7 +67,7 @@ const FormBond: React.FC = () => {
 		>
 			<div className='form'>
 				<Form.Item
-					name='bondName'
+					name='name'
 					label='Название облигации'
 					rules={[{ required: true }]}
 				>
