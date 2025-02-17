@@ -4,6 +4,7 @@ import { Title } from './components/Title';
 import { FormBond } from './components/FormBond';
 import { ListResourses } from './components/ListResourses';
 import { _Table } from './components/Table';
+import { _Modal } from './components/Modal';
 import './App.css';
 import './components/Table/table.css';
 import { DataFormProvider } from './components/store/DataFormContext';
@@ -22,7 +23,8 @@ const App: React.FC = () => {
 						<Flex className='resourses-list-wrap distance' vertical>
 							<ListResourses className='list-resourses ' />
 							<div className='btn-resourses btn-outline'>
-								<Button type='primary'>Добавить ресурс</Button>
+								{/* <Button type='primary'>Добавить ресурс</Button> */}
+							<_Modal />
 							</div>
 						</Flex>
 					</Flex>

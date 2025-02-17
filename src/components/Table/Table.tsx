@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Empty } from 'antd';
 import type { TableProps } from 'antd';
 import { useDataForm } from '../store/DataFormContext';
 
@@ -127,14 +127,23 @@ const _Table: React.FC = ({ className }) => {
 	const { dataForm } = useDataForm();
 
 	return (
-		<Table<DataType>
-			className={className}
-			columns={columns}
-			dataSource={dataForm}
-			sticky
-			scroll={{ x: 'max-content' }} // Включаем прокрутку
-			pagination={{ pageSize: 10 }}
-		/>
+		<>
+			{dataForm.length > 0 ? (
+				<Table<DataType>
+					className={className}
+					columns={columns}
+					dataSource={dataForm}
+					sticky
+					scroll={{ x: 'max-content' }} // Включаем прокрутку
+					pagination={{ pageSize: 10 }}
+				/>
+			) : (
+				<Empty
+					style={{ padding: '20px' }}
+					description='Нет облигаций для отображения'
+				/>
+			)}
+		</>
 	);
 };
 
