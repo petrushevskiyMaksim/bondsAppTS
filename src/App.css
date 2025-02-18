@@ -13,7 +13,7 @@
 	padding: 20px;
 }
 
-.btn-outline {
+/* .btn-outline {
 	position: relative;
 }
 
@@ -25,10 +25,11 @@
 	height: 110%;
 	border-radius: 6px;
 	outline: 2px solid #1677ffc7;
-}
+} */
 
 @media (max-width: 750px) {
 	.form-resourses-wrapper {
+		justify-content: center;
 		flex-wrap: wrap;
 	}
 }

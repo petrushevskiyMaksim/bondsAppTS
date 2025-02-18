@@ -1,65 +1,85 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import React from 'react';
+import { Button, Modal, Flex, Input, Form } from 'antd';
+import { useDataForm } from '../store/DataFormContext';
+import { Resource } from '../store/DataFormContext';
+import './modal.css';
 
 const _Modal: React.FC = () => {
-	const [loading, setLoading] = useState(false);
-	const [open, setOpen] = useState(false);
+	const { resources, setResources, isModalVisible, setModalVisible } =
+		useDataForm();
+	console.log(resources);
 
 	const showModal = () => {
-		setOpen(true);
+		setModalVisible(true);
 	};
 
 	const handleOk = () => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-			setOpen(false);
-		}, 3000);
+		console.log(resources);
+		setModalVisible(false);
 	};
 
 	const handleCancel = () => {
-		setOpen(false);
+		setModalVisible(false);
+	};
+
+	const onFinish = (values: Resource) => {
+		const newResourse = {
+			...values,
+			id: Date.now(), // Уникальный ключ для таблицы
+		};
+		setResources(prevResourse => [...prevResourse, newResourse]);
 	};
 
 	return (
 		<>
 			<Button type='primary' onClick={showModal}>
-				Open Modal with customized footer
+				Добавить ссылку
 			</Button>
 			<Modal
-				open={open}
-				title='Title'
+				centered
+				open={isModalVisible}
+				title='Добавить ссылку'
 				onOk={handleOk}
 				onCancel={handleCancel}
-				footer={[
-					<Button key='back' onClick={handleCancel}>
-						Return
-					</Button>,
-					<Button
-						key='submit'
-						type='primary'
-						loading={loading}
-						onClick={handleOk}
-					>
-						Submit
-					</Button>,
-					<Button
-						key='link'
-						href='https://google.com'
-						target='_blank'
-						type='primary'
-						loading={loading}
-						onClick={handleOk}
-					>
-						Search on Google
-					</Button>,
-				]}
+				footer={
+					<Flex className='modal-btn-wrap' gap={'20px'}>
+						<Button
+							key='link'
+							href='https://google.com'
+							target='_blank'
+							type='primary'
+							onClick={handleOk}
+						>
+							Поиск в Google
+						</Button>
+						<Button key='back' onClick={handleCancel}>
+							Назад
+						</Button>
+					</Flex>
+				}
 			>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
+				<Form onFinish={onFinish} layout='vertical'>
+					<Form.Item name='text' label='Название' rules={[{ required: true }]}>
+						<Input placeholder='Введите название' variant='filled' />
+					</Form.Item>
+					<Form.Item
+						name='url'
+						label='Ссылка (URL)'
+						rules={[{ required: true }]}
+					>
+						<Input placeholder='Введите ссылку (URL)' variant='filled' />
+					</Form.Item>
+					<Form.Item>
+						<Button
+							key='submit'
+							htmlType='submit'
+							type='primary'
+							onClick={handleOk}
+						>
+							Добавить
+						</Button>
+					</Form.Item>
+				</Form>
 			</Modal>
 		</>
 	);

@@ -28,11 +28,17 @@
 	font-weight: 700;
 }
 
+@media (max-width: 900px) {
+	.resourses-wrap {
+		max-width: 50%;
+	}
+}
+
 @media (max-width: 768px) {
 	.resourses-wrap {
 		margin: 0 -10px;
 		flex: 0 1 50% !important;
-		max-width: fit-content !important;
+		max-width: 100% !important;
 	}
 }
 
@@ -41,7 +47,6 @@
 		flex: 1 1 100% !important;
 	}
 	.list-resourses {
-		
 		margin-bottom: 20px;
 	}
 }

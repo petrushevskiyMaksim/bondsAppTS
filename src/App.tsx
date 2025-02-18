@@ -24,7 +24,7 @@ const App: React.FC = () => {
 							<ListResourses className='list-resourses ' />
 							<div className='btn-resourses btn-outline'>
 								{/* <Button type='primary'>Добавить ресурс</Button> */}
-							<_Modal />
+								<_Modal />
 							</div>
 						</Flex>
 					</Flex>
