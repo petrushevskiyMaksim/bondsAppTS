@@ -1,6 +1,34 @@
 import React, { createContext, useContext, useState } from 'react';
 import { DataType } from '../Table/Table';
 
+const dataResourses: Resource[] = [
+	{
+		id: Date.now(),
+		text: 'SmartLab - Облигации',
+		url: 'https://smart-lab.ru/q/ofz/',
+	},
+	{
+		id: Date.now(),
+		text: 'Московская биржа - Облигации',
+		url: 'https://www.moex.com/s2644',
+	},
+	{
+		id: Date.now(),
+		text: 'RusBonds - Облигации',
+		url: 'https://rusbonds.ru/',
+	},
+	{
+		id: Date.now(),
+		text: 'ДОХОД - Анализ облигации',
+		url: 'https://www.dohod.ru/analytic/bonds',
+	},
+	{
+		id: Date.now(),
+		text: 'Investing.com - Облигации',
+		url: 'https://ru.investing.com/rates-bonds/world-government-bonds',
+	},
+];
+
 export interface Resource {
 	id: number;
 	text: string;
@@ -24,7 +52,7 @@ export const DataFormProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [dataForm, setDataForm] = useState<DataType[]>([]);
-	const [resources, setResources] = useState<Resource[]>([]); // Инициализация состояния для списка ресурсов
+	const [resources, setResources] = useState<Resource[]>(dataResourses); // Инициализация состояния для списка ресурсов
 	const [isModalVisible, setModalVisible] = useState<boolean>(false); // Инициализация состояния для модального окна
 
 	return (

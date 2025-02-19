@@ -1,14 +1,16 @@
 import React, { FC } from 'react';
 import type { FormInstance } from 'antd';
 import { Button, Form, Input, DatePicker } from 'antd';
-import type { DatePickerProps } from 'antd';
 import { useDataForm } from '../store/DataFormContext';
 import { DataType } from '../Table/Table';
+import { dateFormate } from '../utils/date/dateFormate';
+import {
+	calcCouponIncome,
+	calcCouponRub,
+} from '../utils/calculations/calcCouponIncome';
+import { yieldYearIncome } from '../utils/calculations/calcYieldYear';
+import { daysMaturity } from '../utils/date/daysMaturity';
 import './form.css';
-
-const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-	console.log(date, dateString);
-};
 
 const { RangePicker } = DatePicker;
 
@@ -47,8 +49,12 @@ const FormBond: React.FC = ({ className }) => {
 	const onFinish = (values: DataType) => {
 		const newData = {
 			...values,
-			buyAndSell: values.buyAndSell.toString(),
-			couponDate: values.couponDate.toString(),
+			buyAndSell: dateFormate(values.buyAndSell),
+			couponDate: dateFormate(values.couponDate),
+			couponIncome: calcCouponIncome(values),
+			couponIncomeRub: calcCouponRub(values),
+			daysToMaturity: daysMaturity(values),
+			yieldYear: yieldYearIncome(values),
 			key: Date.now(), // Уникальный ключ для таблицы
 			order: dataForm.length + 1, // Порядковый номер
 		};
@@ -112,11 +118,19 @@ const FormBond: React.FC = ({ className }) => {
 				</Form.Item>
 
 				<Form.Item
+					name='couponPrice'
+					label='Купон'
+					rules={[{ required: true }]}
+				>
+					<Input type='number' placeholder='Например: 35' />
+				</Form.Item>
+
+				<Form.Item
 					name='couponDate'
 					label='Дата ближайшего купона'
 					rules={[{ required: true }]}
 				>
-					<DatePicker onChange={onChange} />
+					<DatePicker />
 				</Form.Item>
 				<Form.Item
 					name='couponPeriod'

@@ -55,7 +55,10 @@ export interface DataType {
 	nominalPrice: number;
 	buyPrice: number;
 	brokerTax: number;
+	couponPrice: number;
 	buyAndSell: string;
+	yieldYear: number;
+	daysToMaturity: number;
 	couponDate: string;
 	couponPeriod: number;
 	NKD: number;
@@ -105,9 +108,22 @@ const columns: TableProps<DataType>['columns'] = [
 		key: 'buyAndSell',
 	},
 	{
-		title: 'Дата купона',
-		dataIndex: 'couponDate',
-		key: 'couponDate',
+		title: 'Дней до погашения',
+		width: 120,
+		dataIndex: 'daysToMaturity',
+		key: 'daysToMaturity',
+	},
+	{
+		title: 'Купон',
+		width: 100,
+		dataIndex: 'couponPrice',
+		key: 'couponPrice',
+	},
+	{
+		title: 'Купонная доходность',
+		width: 200,
+		dataIndex: 'couponIncome',
+		key: 'couponIncome',
 	},
 	{
 		title: 'Кол-во купонов в год',
@@ -116,10 +132,21 @@ const columns: TableProps<DataType>['columns'] = [
 		key: 'couponPeriod',
 	},
 	{
+		title: 'Дата купона',
+		dataIndex: 'couponDate',
+		key: 'couponDate',
+	},
+	{
 		title: 'НКД',
 		width: 100,
 		dataIndex: 'NKD',
 		key: 'NKD',
+	},
+	{
+		title: 'Доходность в год',
+		width: 120,
+		dataIndex: 'yieldYear',
+		key: 'yieldYear',
 	},
 ];
 

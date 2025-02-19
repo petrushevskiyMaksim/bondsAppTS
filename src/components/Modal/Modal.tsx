@@ -7,7 +7,8 @@ import './modal.css';
 const _Modal: React.FC = () => {
 	const { resources, setResources, isModalVisible, setModalVisible } =
 		useDataForm();
-	console.log(resources);
+
+	const [form] = Form.useForm(); // Создаем форму с помощью useForm()
 
 	const showModal = () => {
 		setModalVisible(true);
@@ -28,6 +29,8 @@ const _Modal: React.FC = () => {
 			id: Date.now(), // Уникальный ключ для таблицы
 		};
 		setResources(prevResourse => [...prevResourse, newResourse]);
+		form.resetFields(); // Очищаем поля формы после добавления
+		setModalVisible(false); // Закрываем модальное окно
 	};
 
 	return (
@@ -58,7 +61,7 @@ const _Modal: React.FC = () => {
 					</Flex>
 				}
 			>
-				<Form onFinish={onFinish} layout='vertical'>
+				<Form form={form} onFinish={onFinish} layout='vertical'>
 					<Form.Item name='text' label='Название' rules={[{ required: true }]}>
 						<Input placeholder='Введите название' variant='filled' />
 					</Form.Item>
