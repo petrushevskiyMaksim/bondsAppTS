@@ -134,7 +134,7 @@ const FormBond: React.FC = ({ className }) => {
 				</Form.Item>
 				<Form.Item
 					name='couponPeriod'
-					label='Периодичность выплаты купона'
+					label='Купонов в год'
 					rules={[{ required: true }]}
 				>
 					<Input type='number' placeholder='Например: 182' />

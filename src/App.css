@@ -13,19 +13,7 @@
 	padding: 20px;
 }
 
-/* .btn-outline {
-	position: relative;
-}
 
-.btn-outline > button:hover:not(:disabled)::after {
-	content: '';
-	position: absolute;
-	display: block;
-	width: 102.5%;
-	height: 110%;
-	border-radius: 6px;
-	outline: 2px solid #1677ffc7;
-} */
 
 @media (max-width: 750px) {
 	.form-resourses-wrapper {
@@ -33,24 +21,3 @@
 		flex-wrap: wrap;
 	}
 }
-
-/* @media (max-width: 700px) {
-	main {
-		margin-right: 0px;
-		margin-bottom: 20px;
-	}
-	.ant-layout.ant-layout-has-sider {
-		flex-direction: column;
-	}
-
-	.ant-layout.ant-layout-has-sider > .ant-layout-content {
-		width: 100%;
-	}
-
-	.resourses {
-		width: 100% !important;
-		flex: 0 0 auto !important;
-		min-width: 100% !important;
-		max-width: 100% !important;
-	}
-} */

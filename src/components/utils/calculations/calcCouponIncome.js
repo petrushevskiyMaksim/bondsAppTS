@@ -1,3 +1,5 @@
+import { daysMaturity } from '../date/daysMaturity';
+
 export function calcCouponIncome(bond) {
 	const num =
 		((Number(bond.couponPrice) *
@@ -11,8 +13,23 @@ export function calcCouponIncome(bond) {
 }
 
 export function calcCouponRub(bond) {
-	const result =
-		Number(bond.couponPrice) *
-		(365 / Math.floor(365 / Number(bond.couponPeriod)));
+	const daysToMaturity = daysMaturity(bond);
+	const quantityCouponYear = 365 / Math.floor(365 / Number(bond.couponPeriod));
+	const yearsToMaturity = Number(daysToMaturity) / 365;
+	console.log(quantityCouponYear, yearsToMaturity);
+
+	let result;
+
+	if (yearsToMaturity >= 1) {
+		result =
+			(Number(bond.couponPrice) * 365) /
+			Math.floor(365 / Number(bond.couponPeriod));
+	} else {
+		result =
+			Number(bond.couponPrice) *
+			(Number(Math.floor(yearsToMaturity * quantityCouponYear)) + 1);
+	}
+
+	console.log(result);
 	return `${Math.floor(result * 100) / 100}`;
 }
