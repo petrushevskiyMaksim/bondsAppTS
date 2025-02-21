@@ -4,29 +4,27 @@
 	background-color: #fff;
 	overflow: hidden;
 }
-/* 
-*/
-/* .table-wrap {
-	max-width: 100%;
-	overflow: auto;
+
+/* Стили для скроллбара */
+.ant-table-container .ant-table-body::-webkit-scrollbar {
+	width: 12px !important; /* Ширина скроллбара */
+}
+
+.ant-table-container::-webkit-scrollbar-track {
+	background: #f1f1f1 !important; /* Цвет трека */
+	border-radius: 10px !important;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb {
+	background: #888 !important; /* Цвет ползунка */
+	border-radius: 10px !important;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb:hover {
+	background: #555 !important; /* Цвет ползунка при наведении */
 }
 
 .ant-table-body {
-	overflow: auto;
-	width: 100%;
+	scrollbar-width: thin; /* "auto", "thin", "none" */
+	scrollbar-color: #888 #f1f1f1; /* Цвет ползунка и трека */
 }
-
-table {
-	overflow: auto;
-	width: 100%;
-} */
-
-/* table {
-	table-layout: auto !important;
-} */
-/*
-.ant-table-container {
-	display: flex !important;
-	flex-direction: column !important;
-	overflow: auto !important;
-} */

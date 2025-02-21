@@ -1,5 +1,5 @@
 export function daysMaturity(bond) {
-	console.log(bond.buyAndSell);
+	
 
 	const dataDate = bond.buyAndSell;
 	const dayBuy = dataDate[0].$d.getTime();

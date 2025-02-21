@@ -1,7 +1,6 @@
 import { getMonthName } from './dateName';
 
 export function dateFormate(date) {
-	console.log(date);
 
 	if (Array.isArray(date)) {
 		const dataDateBuy = date[0].$d;

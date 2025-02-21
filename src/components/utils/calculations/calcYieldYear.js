@@ -19,7 +19,7 @@ export function yieldYearIncome(bond) {
 				difference / yearsToMaturity) /
 				(Number(buyPrice) + Number(NKD) + Number(tax))) *
 			100;
-		console.log('Был расчет БОЛЬШЕ 1');
+		
 	} else {
 		result =
 			((Number(couponPrice) *
@@ -27,7 +27,7 @@ export function yieldYearIncome(bond) {
 				difference) /
 				(Number(buyPrice) + Number(tax) + Number(NKD))) *
 			100;
-		console.log('Был расчет меньше 1');
+		
 	}
 
 	return `${Math.floor(result * 100) / 100} % (${calcCouponRub(bond)} руб.)`;
