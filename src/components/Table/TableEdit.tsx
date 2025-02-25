@@ -74,9 +74,9 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
 		inputType === 'string' ? (
 			<Input />
 		) : inputType === 'date' ? (
-			<Input />
+			<DatePicker />
 		) : inputType === 'doubleDate' ? (
-			<Input />
+			<RangePicker />
 		) : (
 			<InputNumber />
 		);
