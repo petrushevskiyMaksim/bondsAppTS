@@ -3,11 +3,13 @@ import { Flex, Col, Row, Button, Layout } from 'antd';
 import { Title } from './components/Title';
 import { FormBond } from './components/FormBond';
 import { ListResourses } from './components/ListResourses';
-import { _Table } from './components/Table';
+import TableEdit from './components/Table/TableEdit';
 import { _Modal } from './components/Modal';
+import { DataFormProvider } from './components/store/DataFormContext';
+
+
 import './App.css';
 import './components/Table/table.css';
-import { DataFormProvider } from './components/store/DataFormContext';
 
 const App: React.FC = () => {
 	return (
@@ -31,7 +33,7 @@ const App: React.FC = () => {
 				</Flex>
 				<Flex className='table-wrap' vertical>
 					<Title className='title' text={'Портфель облигаций'} />
-					<_Table className=''></_Table>
+					<TableEdit className=''></TableEdit>
 				</Flex>
 			</Layout>
 		</DataFormProvider>

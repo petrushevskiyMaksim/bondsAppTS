@@ -3,13 +3,14 @@ import type { FormInstance } from 'antd';
 import { Button, Form, Input, DatePicker } from 'antd';
 import { useDataForm } from '../store/DataFormContext';
 import { DataType } from '../Table/Table';
-import { dateFormate } from '../utils/date/dateFormate';
+import { dateFormate, dateFormateMy } from '../utils/date/dateFormate';
 import {
 	calcCouponIncome,
 	calcCouponRub,
 } from '../utils/calculations/calcCouponIncome';
 import { yieldYearIncome } from '../utils/calculations/calcYieldYear';
 import { daysMaturity } from '../utils/date/daysMaturity';
+import moment from 'moment';
 import './form.css';
 
 const { RangePicker } = DatePicker;
@@ -46,6 +47,31 @@ const FormBond: React.FC = ({ className }) => {
 
 	const { dataForm, setDataForm } = useDataForm();
 
+	const dateBuy = new Date('2023-01-01');
+	const dateSell = new Date('2023-01-02');
+	const arrayBuyAndSell = [dateBuy, dateSell];
+
+	const dateCoupon = new Date('2023-01-03');
+
+	function renderBond() {
+		const bond = {
+			order: dataForm.length + 1,
+			name: `Фэйк ${dataForm.length + 1}`,
+			sumBonds: 2,
+			nominalPrice: 1000,
+			buyPrice: 950,
+			brokerTax: 0.3,
+			buyAndSell: dateFormateMy(arrayBuyAndSell),
+			couponPrice: 50,
+			couponDate: dateFormateMy(dateCoupon),
+			couponPeriod: 2,
+			NKD: 2,
+			daysToMaturity: 182,
+			key: Date.now(),
+		};
+		setDataForm(prev => [...prev, bond]);
+	}
+
 	const onFinish = (values: DataType) => {
 		const newData = {
 			...values,
@@ -55,9 +81,10 @@ const FormBond: React.FC = ({ className }) => {
 			couponIncomeRub: calcCouponRub(values),
 			daysToMaturity: daysMaturity(values),
 			yieldYear: yieldYearIncome(values),
-			key: Date.now(), // Уникальный ключ для таблицы
+			key: Date.now().toString(), // Уникальный ключ для таблицы Date.now()
 			order: dataForm.length + 1, // Порядковый номер
 		};
+
 		setDataForm(prevData => [...prevData, newData]);
 		form.resetFields(); // Очистка формы после отправки
 	};
@@ -149,16 +176,17 @@ const FormBond: React.FC = ({ className }) => {
 			</div>
 
 			<div className='form-buttons'>
-				<div className='btn-outline'>
-					<SubmitButton type='primary' form={form}>
-						Добавить облигацию
-					</SubmitButton>
-				</div>
-				<div className='btn-outline'>
-					<Button type='primary' htmlType='reset'>
-						Очистить форму
-					</Button>
-				</div>
+				<SubmitButton type='primary' form={form}>
+					Добавить облигацию
+				</SubmitButton>
+
+				<Button type='primary' htmlType='reset'>
+					Очистить форму
+				</Button>
+
+				<Button type='primary' htmlType='button' onClick={renderBond}>
+					Фэйковая облигация
+				</Button>
 			</div>
 		</Form>
 	);

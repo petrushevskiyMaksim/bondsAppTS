@@ -1,39 +1,27 @@
-import { getMonthName } from './dateName';
+import moment from 'moment';
 
 export function dateFormate(date) {
-
 	if (Array.isArray(date)) {
-		const dataDateBuy = date[0].$d;
-		const dataDateSell = date[1].$d;
+		const formateDateStart = date[0].format('DD-MM MMMM-YYYY');
+		const formateDateEnd = date[1].format('DD-MM MMMM-YYYY');
 
-		const dayBuy = dataDateBuy.getDate().toString().padStart(2, '0');
-		const monthBuy = (dataDateBuy.getMonth() + 1).toString().padStart(2, '0');
-		const monthBuyNumber = dataDateBuy.getMonth() + 1;
-		const yearBuy = dataDateBuy.getFullYear().toString();
-
-		const daySell = dataDateSell.getDate().toString().padStart(2, '0');
-		const monthSell = (dataDateSell.getMonth() + 1).toString().padStart(2, '0');
-		const monthSellNumber = dataDateSell.getMonth() + 1;
-		const yearSell = dataDateSell.getFullYear().toString();
-
-		const monthStringViewBuy = getMonthName(monthBuyNumber);
-		const monthStringViewSell = getMonthName(monthSellNumber);
-
-		const dateFormate = `${dayBuy}-${monthBuy}(${monthStringViewBuy})-${yearBuy} / ${daySell}-${monthSell}(${monthStringViewSell})-${yearSell}`;
-
-		return dateFormate;
+		return `${formateDateStart} / ${formateDateEnd}`;
 	} else {
-		const dataDateCoupon = date.$d;
+		const formateDate = date.format('DD-MM MMMM-YYYY');
 
-		const day = dataDateCoupon.getDate().toString().padStart(2, '0');
-		const monthNumber = dataDateCoupon.getMonth() + 1;
-		const month = (dataDateCoupon.getMonth() + 1).toString().padStart(2, '0');
-		const year = dataDateCoupon.getFullYear().toString();
+		return `${formateDate}`;
+	}
+}
 
-		const monthStringView = getMonthName(monthNumber);
+export function dateFormateMy(date) {
+	if (Array.isArray(date)) {
+		const formateDateStart = moment(date[0]).format('DD-MM MMMM-YYYY');
+		const formateDateEnd = moment(date[1]).format('DD-MM MMMM-YYYY');
 
-		const dateFormate = `${day}-${month}(${monthStringView})-${year}`;
+		return `${formateDateStart} / ${formateDateEnd}`;
+	} else {
+		const formateDate = moment(date).format('DD-MM MMMM-YYYY');
 
-		return dateFormate;
+		return `${formateDate}`;
 	}
 }
