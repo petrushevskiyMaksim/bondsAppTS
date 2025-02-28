@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Flex, Input, Form } from 'antd';
-import { useDataForm } from '../store/DataFormContext';
-import { Resource } from '../store/DataFormContext';
+import { useDataForm } from '../../store/DataFormContext';
+import { Resource } from '../../store/DataFormContext';
 import './modal.css';
 
 const _Modal: React.FC = () => {

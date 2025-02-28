@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { DataType } from '../Table/Table';
+import { DataType } from '../components/Table/TableEdit';
 
 const dataResourses: Resource[] = [
 	{

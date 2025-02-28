@@ -1,34 +1,31 @@
 import React, { useState } from 'react';
-import {
-	Table,
-	Empty,
-	Form,
-	Input,
-	InputNumber,
-	DatePicker,
-	Typography,
-	Popconfirm,
-	Button,
-} from 'antd';
-import type { TableProps } from 'antd';
-import { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
-import { useDataForm } from '../store/DataFormContext';
-import moment from 'moment';
+import { Table, Form, Input, InputNumber, Typography, Popconfirm } from 'antd';
+import type { ColumnType } from 'antd/es/table';
+import { useDataForm } from '../../store/DataFormContext';
 import './table.css';
 
-const { RangePicker } = DatePicker;
-// console.log(DatePicker);
+// Новый интерфейс для столбцов с добавленным свойством editable
+interface EditableColumnType<DataType> extends ColumnType<DataType> {
+	editable?: boolean; // Добавляем свойство editable
+	dataIndex?: string;
+	width?: number;
+}
 
-interface DataType {
+interface TableEditProps {
+	className?: string; // Опциональный пропс
+}
+
+export interface DataType {
 	order: number;
 	name: string;
 	sumBonds: number;
 	nominalPrice: number;
 	buyPrice: number;
 	brokerTax: number;
-	buyAndSell: string;
+	buyDate: string; // "YYYY-MM-DD"
+	sellDate: string; // "YYYY-MM-DD"
 	couponPrice: number;
-	couponDate: string;
+	couponDate: string; // "YYYY-MM-DD"
 	couponPeriod: number;
 	NKD: number;
 	daysToMaturity: number;
@@ -37,30 +34,18 @@ interface DataType {
 	editable: boolean;
 }
 
-// const originData = Array.from({ length: 100 }).map<DataType>((_, i) => ({
-// 	key: i.toString(),
-// 	name: `Edward ${i}`,
-// 	age: 32,
-// 	address: `London Park no. ${i}`,
-// }));
-
-// {
-// 			title: 'name',
-// 			dataIndex: 'name',
-// 			width: '25%',
-// 			editable: true,
-// 		},
+// interface CellProps {}
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
 	editing: boolean;
 	dataIndex: string;
 	title: string;
-	inputType: 'string' | 'date' | 'number' | 'doubleDate';
+	inputType: 'string' | 'date' | 'number';
 	record: DataType;
 	index: number;
 }
 
-const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
+const EditableCell: React.FC<EditableCellProps> = ({
 	editing,
 	dataIndex,
 	title,
@@ -70,29 +55,28 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
 	children,
 	...restProps
 }) => {
-	const inputNode =
-		inputType === 'string' ? (
-			<Input />
-		) : inputType === 'date' ? (
-			<DatePicker />
-		) : inputType === 'doubleDate' ? (
-			<RangePicker />
-		) : (
-			<InputNumber />
-		);
+	let inputNode: React.ReactNode;
+
+	switch (inputType) {
+		case 'string':
+			inputNode = <Input />;
+			break;
+		case 'date':
+			// Используем нативный календарь
+			inputNode = <Input type='date' />;
+			break;
+		case 'number':
+		default:
+			inputNode = <InputNumber />;
+	}
+
+	// Правила валидации
+	const rules = [{ required: true, message: `Пожалуйста, введите ${title}!` }];
+
 	return (
 		<td {...restProps}>
 			{editing ? (
-				<Form.Item
-					name={dataIndex}
-					style={{ margin: 0 }}
-					rules={[
-						{
-							required: true,
-							message: `Please Input ${title}!`,
-						},
-					]}
-				>
+				<Form.Item name={dataIndex} style={{ margin: 0 }} rules={rules}>
 					{inputNode}
 				</Form.Item>
 			) : (
@@ -102,46 +86,45 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
 	);
 };
 
-const TableEdit: React.FC = ({ className }) => {
+const TableEdit: React.FC<TableEditProps> = ({ className }) => {
 	const { dataForm, setDataForm } = useDataForm();
 	const [form] = Form.useForm();
-	// const [data, setData] = useState<DataType[]>(dataForm);
-	const [editingKey, setEditingKey] = useState('');
+	const [editingKey, setEditingKey] = useState<string>('');
 
 	const isEditing = (record: DataType) => record.key === editingKey;
 
-	const edit = (record: Partial<DataType> & { key: React.Key }) => {
-		console.log(record.buyAndSell);
-
-		form.setFieldsValue({
-			name: '',
-			buyAndSell: '',
-			couponDate: '',
-			...record,
-		});
+	// При нажатии "Edit" устанавливаем значения из записи в форму
+	const edit = (record: DataType) => {
+		form.setFieldsValue({ ...record });
 		setEditingKey(record.key);
 	};
 
+	const handleDelete = (key: React.Key) => {
+		const newData = dataForm.filter(item => item.key !== key);
+		setDataForm(newData);
+	};
+
+	// Отмена редактирования
 	const cancel = () => {
 		setEditingKey('');
 	};
 
+	// Сохранение изменений
 	const save = async (key: React.Key) => {
 		try {
-			const row = (await form.validateFields()) as DataType;
-
+			// Получаем значения из формы
+			const row = await form.validateFields();
 			const newData = [...dataForm];
 			const index = newData.findIndex(item => key === item.key);
+
 			if (index > -1) {
 				const item = newData[index];
-				newData.splice(index, 1, {
+				// Обновляем запись
+				const updatedRow = {
 					...item,
 					...row,
-				});
-				setDataForm(newData);
-				setEditingKey('');
-			} else {
-				newData.push(row);
+				};
+				newData.splice(index, 1, updatedRow);
 				setDataForm(newData);
 				setEditingKey('');
 			}
@@ -150,118 +133,60 @@ const TableEdit: React.FC = ({ className }) => {
 		}
 	};
 
-	// const columns = [
-	// 	{
-	// 		title: 'name',
-	// 		dataIndex: 'name',
-	// 		width: '25%',
-	// 		editable: true,
-	// 	},
-	// 	{
-	// 		title: 'age',
-	// 		dataIndex: 'age',
-	// 		width: '15%',
-	// 		editable: true,
-	// 	},
-	// 	{
-	// 		title: 'address',
-	// 		dataIndex: 'address',
-	// 		width: '40%',
-	// 		editable: true,
-	// 	},
-	// 	{
-	// 		title: 'operation',
-	// 		dataIndex: 'operation',
-	// 		render: (_: any, record: DataType) => {
-	// 			const editable = isEditing(record);
-	// 			return editable ? (
-	// 				<span>
-	// 					<Typography.Link
-	// 						onClick={() => save(record.key)}
-	// 						style={{ marginInlineEnd: 8 }}
-	// 					>
-	// 						Save
-	// 					</Typography.Link>
-	// 					<Popconfirm title='Sure to cancel?' onConfirm={cancel}>
-	// 						<a>Cancel</a>
-	// 					</Popconfirm>
-	// 				</span>
-	// 			) : (
-	// 				<Typography.Link
-	// 					disabled={editingKey !== ''}
-	// 					onClick={() => edit(record)}
-	// 				>
-	// 					Edit
-	// 				</Typography.Link>
-	// 			);
-	// 		},
-	// 	},
-	// ];
-
-	const columns: TableProps<DataType>['columns'] = [
+	// Определяем столбцы таблицы
+	const columns: EditableColumnType<DataType>[] = [
 		{
 			title: '№',
-			width: 50,
 			dataIndex: 'order',
+			width: 50,
+			editable: false,
 			sorter: (a, b) => a.order - b.order,
 		},
 		{
 			title: 'Название',
-			width: 120,
 			dataIndex: 'name',
+			width: 120,
 			fixed: 'left',
 			editable: true,
 		},
-		{
-			title: 'Количество',
-			width: 120,
-			dataIndex: 'sumBonds',
-			editable: true,
-		},
-		{
-			title: 'Номинал',
-			width: 100,
-			dataIndex: 'nominalPrice',
-			editable: true,
-		},
+		{ title: 'Количество', dataIndex: 'sumBonds', width: 120, editable: true },
+		{ title: 'Номинал', dataIndex: 'nominalPrice', width: 100, editable: true },
 		{
 			title: 'Цена покупки',
-			width: 100,
 			dataIndex: 'buyPrice',
+			width: 100,
 			editable: true,
 		},
 		{
 			title: 'Комиссия брокера',
-			width: 100,
 			dataIndex: 'brokerTax',
+			width: 100,
 			editable: true,
 		},
+		{ title: 'Дата покупки', dataIndex: 'buyDate', width: 150, editable: true },
 		{
-			title: 'Дата покупки / продажи',
-			dataIndex: 'buyAndSell',
-			width: 300,
+			title: 'Дата продажи',
+			dataIndex: 'sellDate',
+			width: 150,
 			editable: true,
 		},
 		{
 			title: 'Дней до погашения',
-			width: 120,
 			dataIndex: 'daysToMaturity',
+			width: 120,
+			editable: false,
 		},
-		{
-			title: 'Купон',
-			width: 100,
-			dataIndex: 'couponPrice',
-			editable: true,
-		},
+		{ title: 'Купон', dataIndex: 'couponPrice', width: 100, editable: true },
 		{
 			title: 'Купонная доходность',
-			width: 200,
 			dataIndex: 'couponIncome',
+			width: 200,
+			editable: false,
 		},
 		{
 			title: 'Кол-во купонов в год',
-			width: 130,
 			dataIndex: 'couponPeriod',
+			width: 130,
 			editable: true,
 		},
 		{
@@ -270,21 +195,18 @@ const TableEdit: React.FC = ({ className }) => {
 			width: 150,
 			editable: true,
 		},
-		{
-			title: 'НКД',
-			width: 100,
-			dataIndex: 'NKD',
-			editable: true,
-		},
+		{ title: 'НКД', dataIndex: 'NKD', width: 100, editable: true },
 		{
 			title: 'Доходность в год',
-			width: 120,
 			dataIndex: 'yieldYear',
+			width: 120,
+			editable: false,
 		},
 		{
 			title: 'Действие',
-			width: 120,
 			dataIndex: 'operation',
+			width: 120,
+			editable: false,
 			render: (_: any, record: DataType) => {
 				const editable = isEditing(record);
 				return editable ? (
@@ -295,40 +217,66 @@ const TableEdit: React.FC = ({ className }) => {
 						>
 							Save
 						</Typography.Link>
-						<Popconfirm title='Sure to cancel?' onConfirm={cancel}>
+						<Popconfirm
+							title='Уверены, что хотите отменить?'
+							onConfirm={cancel}
+						>
 							<a>Cancel</a>
 						</Popconfirm>
 					</span>
 				) : (
-					<span>
+					<>
 						<Typography.Link
 							disabled={editingKey !== ''}
 							onClick={() => edit(record)}
 						>
 							Edit
 						</Typography.Link>
-					</span>
+						{dataForm.length >= 1 ? (
+							<Popconfirm
+								title='Уверены, что хотите удалить?'
+								onConfirm={() => handleDelete(record.key)}
+							>
+								<a style={{ display: 'inline-block', marginLeft: '8px' }}>
+									Delete
+								</a>
+							</Popconfirm>
+						) : null}
+					</>
 				);
 			},
 		},
 	];
 
-	const mergedColumns: TableProps<DataType>['columns'] = columns.map(col => {
+	// Настраиваем редактируемые ячейки
+	const mergedColumns: EditableColumnType<DataType>[] = columns.map(col => {
 		if (!col.editable) {
 			return col;
+		}
+		// Определяем тип input
+		let inputType: 'string' | 'date' | 'number' = 'string';
+		if (
+			col.dataIndex === 'buyDate' ||
+			col.dataIndex === 'sellDate' ||
+			col.dataIndex === 'couponDate'
+		) {
+			inputType = 'date';
+		} else if (
+			col.dataIndex === 'sumBonds' ||
+			col.dataIndex === 'nominalPrice' ||
+			col.dataIndex === 'buyPrice' ||
+			col.dataIndex === 'brokerTax' ||
+			col.dataIndex === 'couponPrice' ||
+			col.dataIndex === 'couponPeriod' ||
+			col.dataIndex === 'NKD'
+		) {
+			inputType = 'number';
 		}
 		return {
 			...col,
 			onCell: (record: DataType) => ({
 				record,
-				inputType:
-					col.dataIndex === 'name'
-						? 'string'
-						: col.dataIndex === 'buyAndSell'
-						? 'doubleDate'
-						: col.dataIndex === 'couponDate'
-						? 'date'
-						: 'number',
+				inputType,
 				dataIndex: col.dataIndex,
 				title: col.title,
 				editing: isEditing(record),
@@ -339,14 +287,12 @@ const TableEdit: React.FC = ({ className }) => {
 	return (
 		<Form form={form} component={false}>
 			<Table<DataType>
-				components={{
-					body: { cell: EditableCell },
-				}}
+				components={{ body: { cell: EditableCell } }}
 				className={className}
 				columns={mergedColumns}
 				dataSource={dataForm}
 				sticky
-				scroll={{ x: 'max-content', y: 300 }} // Включаем прокрутку
+				scroll={{ x: 'max-content', y: 300 }}
 				pagination={{ pageSize: 10 }}
 			/>
 		</Form>

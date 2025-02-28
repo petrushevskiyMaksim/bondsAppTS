@@ -1,5 +1,12 @@
-import './title.css'
+import './title.css';
 
-export default function Title({ className, text }) {
-	return <h2 className={className}>{text}</h2>;
+interface TitleProps {
+	className?: string; // Опциональный пропс
+	text: string; // Обязательный пропс
 }
+
+const Title: React.FC<TitleProps> = ({ className, text }) => {
+	return <h2 className={className}>{text}</h2>;
+};
+
+export default Title;

@@ -1,10 +1,14 @@
 import React from 'react';
 import { List } from 'antd';
-import { useDataForm } from '../store/DataFormContext';
+import { useDataForm } from '../../store/DataFormContext';
 import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
 import './ListResourses.css';
 
-const ListResourses: React.FC = ({ className }) => {
+interface ListResoursesProps {
+	className?: string; // Опциональный пропс
+}
+
+const ListResourses: React.FC<ListResoursesProps> = ({ className }) => {
 	const { resources } = useDataForm();
 
 	return (
