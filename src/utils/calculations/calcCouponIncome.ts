@@ -16,20 +16,14 @@ export function calcCouponRub(bond) {
 	const daysToMaturity = daysMaturity(bond);
 	const quantityCouponYear = 365 / Math.floor(365 / Number(bond.couponPeriod));
 	const yearsToMaturity = Number(daysToMaturity) / 365;
-	
 
-	let result;
+	const result =
+		Number(bond.couponPrice) *
+			(Number(
+				Math.floor(yearsToMaturity /*0.997*/ * quantityCouponYear /*2.005*/)
+			) +
+				1) -
+		bond.NKD;
 
-	if (yearsToMaturity >= 1) {
-		result =
-			(Number(bond.couponPrice) * 365) /
-			Math.floor(365 / Number(bond.couponPeriod));
-	} else {
-		result =
-			Number(bond.couponPrice) *
-			(Number(Math.floor(yearsToMaturity * quantityCouponYear)) + 1);
-	}
-
-	
 	return `${Math.floor(result * 100) / 100}`;
 }
